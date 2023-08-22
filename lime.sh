@@ -11,7 +11,7 @@ $DEBUG && echo "   \$ZSH set to \"$ZSH\""
 # # Check for updates on initial load...
 # source "$ZSH/tools/check_for_upgrade.sh"
 
-# Initializes Oh My Zsh
+# Initializes Lime
 
 # add a function path
 fpath=("$ZSH/functions" "$ZSH/completions" $fpath)
@@ -46,7 +46,7 @@ for plugin ($plugins); do
   elif is_plugin "$ZSH" "$plugin"; then
     fpath=("$ZSH/plugins/$plugin" $fpath)
   else
-    echo "[oh-my-zsh] plugin '$plugin' not found"
+    echo "[lime] plugin '$plugin' not found"
   fi
 done
 
@@ -70,13 +70,15 @@ _lime_source() {
 
   # Source file from $ZSH_CUSTOM if it exists, otherwise from $ZSH
   if [[ -f "$ZSH_CUSTOM/$filepath" ]]; then
+    $DEBUG && echo "   >> loading config file ($filepath)"
     source "$ZSH_CUSTOM/$filepath"
   elif [[ -f "$ZSH/$filepath" ]]; then
+    $DEBUG && echo "   >> loading config file ($filepath)"
     source "$ZSH/$filepath"
   fi
 }
 
-# Load all of the config files in ~/oh-my-zsh that end in .zsh
+# Load all of the config files in ~/.lime that end in .zsh
 # TIP: Add files you don't want in git to .gitignore
 for config_file ("$ZSH"/lib/*.zsh); do
   $DEBUG && echo "-- loading lib file ($config_file)"
@@ -92,16 +94,20 @@ done
 unset plugin
 
 # Load all of your custom configurations from custom/
-for config_file ("$ZSH_CUSTOM"/*.zsh(N)); do
+for config_filepath ("$ZSH_CUSTOM"/*.zsh(N)); do
+  config_file="$(basename $config_filepath)"
   $DEBUG && echo "-- loading custom config file ($config_file)"
-  source "$config_file"
+  _lime_source "$config_file"
 done
+unset config_filepath
 unset config_file
 
-for config_file ("$ZSH_CUSTOM"/aliases/*.zsh); do
+for config_filepath ("$ZSH_CUSTOM"/aliases/*.zsh); do
+  config_file="$(basename $config_filepath)"
   $DEBUG && echo "-- loading aliases ($config_file)"
   _lime_source "aliases/$config_file"
 done
+unset config_filepath
 unset config_file
 
 # Load the theme
@@ -121,7 +127,7 @@ if [[ -n "$ZSH_THEME" ]]; then
   elif is_theme "$ZSH/themes" "$ZSH_THEME"; then
     source "$ZSH/themes/$ZSH_THEME.zsh-theme"
   else
-    echo "[oh-my-zsh] theme '$ZSH_THEME' not found"
+    echo "[lime] theme '$ZSH_THEME' not found"
   fi
 fi
 
