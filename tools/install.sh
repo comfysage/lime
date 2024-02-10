@@ -358,8 +358,8 @@ setup_zshrc() {
   fi
   lme=$(echo "$lme" | sed "s|^$HOME/|\$HOME/|")
 
-  sed "s|^export ZSH=.*$|export ZSH=\"${lme}\"|" "$ZSH/templates/zshrc.zsh-template" > "$zdot/.zshrc-omztemp"
-  mv -f "$zdot/.zshrc-omztemp" "$zdot/.zshrc"
+  sed "s|^export ZSH=.*$|export ZSH=\"${lme}\"|" "$ZSH/templates/zshrc.zsh-template" > "$zdot/.zshrc-limetemp"
+  mv -f "$zdot/.zshrc-limetemp" "$zdot/.zshrc"
 
   echo
 }
