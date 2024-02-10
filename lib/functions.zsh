@@ -4,13 +4,13 @@ function zsh_stats() {
     | grep -v "./" | sort -nr | head -n 20 | column -c3 -s " " -t | nl
 }
 
-function uninstall_oh_my_zsh() {
+function uninstall_lime() {
   command env ZSH="$ZSH" sh "$ZSH/tools/uninstall.sh"
 }
 
-function upgrade_oh_my_zsh() {
-  echo >&2 "${fg[yellow]}Note: \`$0\` is deprecated. Use \`omz update\` instead.$reset_color"
-  omz update
+function upgrade_lime() {
+  echo >&2 "${fg[yellow]}Note: \`$0\` is deprecated. Use \`lime update\` instead.$reset_color"
+  lime update
 }
 
 function open_command() {
@@ -151,14 +151,14 @@ zmodload zsh/langinfo
 # Returns nonzero if encoding failed.
 #
 # Usage:
-#  omz_urlencode [-r] [-m] [-P] <string> [<string> ...]
+#  lime_urlencode [-r] [-m] [-P] <string> [<string> ...]
 #
 #    -r causes reserved characters (;/?:@&=+$,) to be escaped
 #
 #    -m causes "mark" characters (_.!~*''()-) to be escaped
 #
 #    -P causes spaces to be encoded as '%20' instead of '+'
-function omz_urlencode() {
+function lime_urlencode() {
   emulate -L zsh
   local -a opts
   zparseopts -D -E -a opts r m P
@@ -228,8 +228,8 @@ function omz_urlencode() {
 # Returns nonzero if encoding failed.
 #
 # Usage:
-#   omz_urldecode <urlstring>  - prints decoded string followed by a newline
-function omz_urldecode {
+#   lime_urldecode <urlstring>  - prints decoded string followed by a newline
+function lime_urldecode {
   emulate -L zsh
   local encoded_url=$1
 
